@@ -14,7 +14,7 @@ class Task3App extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Task 2: Stopwatch'),
+          title: const Text('Task 3: Stopwatch'),
         ),
         body: const StopwatchScreen(),
       ),

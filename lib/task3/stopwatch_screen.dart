@@ -15,14 +15,6 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (stopwatch.isRunning) {
-      _timer = Timer.periodic(const Duration(milliseconds: 40), (_) {
-        setState(() {});
-      });
-    } else {
-      _timer?.cancel();
-      _timer = null;
-    }
     return Column(
       children: [
         Expanded(
@@ -31,10 +23,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
             child: Center(
               child: Text(
                 stopwatch.elapsedMilliseconds.toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall
-                    ?.copyWith(fontFamily: 'monospace'),
+                style: Theme.of(context).textTheme.displaySmall,
               ),
             ),
           ),
@@ -64,8 +53,13 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                       setState(() {
                         if (stopwatch.isRunning) {
                           stopwatch.stop();
+                          _timer?.cancel();
                         } else {
                           stopwatch.start();
+                          _timer = Timer.periodic(
+                              const Duration(milliseconds: 40), (_) {
+                            setState(() {});
+                          });
                         }
                       });
                     },
