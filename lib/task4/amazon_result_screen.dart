@@ -17,7 +17,8 @@ class _AmazonResultScreenState extends State<AmazonResultScreen> {
   void initState() {
     webViewController.loadRequest(
       Uri.parse(
-          'https://www.amazon.co.jp/dp/${_convertIsbn13ToIsbn10(widget.isbn)}'),
+        'https://www.amazon.co.jp/dp/${_convertIsbn13ToIsbn10(widget.isbn)}',
+      ),
     );
     super.initState();
   }
