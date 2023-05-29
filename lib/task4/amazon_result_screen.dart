@@ -50,11 +50,17 @@ class _AmazonResultScreenState extends State<AmazonResultScreen> {
       return isbn13;
     }
     final digits = isbn13.substring(3, 12).split('');
-    var sum = 0;
-    for (var i = 0; i < digits.length; i++) {
-      final digit = int.parse(digits[i]);
-      sum += digit * (10 - i);
-    }
+    // implement using asMap
+    // var sum = 0;
+    // digits.asMap().forEach((index, value) {
+    //   final digit = int.parse(value);
+    //   sum += digit * (10 - index);
+    // });
+    // implement using fold
+    var i = 0;
+    final sum = digits.fold(0, (previousValue, element) {
+      return previousValue + int.parse(element) * (10 - i++);
+    });
     final checkDigit = 11 - sum % 11;
     final isbn10 = isbn13.substring(3, 12) + checkDigit.toString();
     return isbn10;
