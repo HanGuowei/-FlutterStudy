@@ -50,20 +50,18 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                   flex: 2,
                   child: IconButton.filledTonal(
                     onPressed: () {
-                      setState(() {
-                        if (stopwatch.isRunning) {
-                          stopwatch.stop();
-                          _timer?.cancel();
-                        } else {
-                          stopwatch.start();
-                          _timer = Timer.periodic(
-                              const Duration(milliseconds: 40), (_) {
-                            setState(() {});
-                          });
-                        }
-                      });
+                      if (stopwatch.isRunning) {
+                        stopwatch.stop();
+                        _timer?.cancel();
+                      } else {
+                        stopwatch.start();
+                        _timer = Timer.periodic(
+                            const Duration(milliseconds: 40), (_) {
+                          setState(() {});
+                        });
+                      }
                     },
-                    icon: (stopwatch.isRunning)
+                    icon: stopwatch.isRunning
                         ? const Icon(Icons.stop)
                         : const Icon(Icons.play_arrow),
                   ),
@@ -79,6 +77,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
   @override
   void dispose() {
     stopwatch.stop();
+    _timer?.cancel();
     super.dispose();
   }
 }
