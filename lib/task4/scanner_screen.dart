@@ -11,7 +11,7 @@ class ScannerScreen extends StatefulWidget {
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
-  List<Barcode> scanResultListForBarcode = [];
+  List<Barcode> _scanResultListForBarcode = [];
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
               alignment: Alignment.bottomCenter,
               child: ListView.separated(
                 reverse: true,
-                itemCount: scanResultListForBarcode.length,
+                itemCount: _scanResultListForBarcode.length,
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 10),
                 itemBuilder: (context, index) {
@@ -53,7 +53,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
           context,
           MaterialPageRoute<AmazonResultScreen>(
             builder: (context) => AmazonResultScreen(
-              isbn: scanResultListForBarcode.elementAt(index).rawValue!,
+              isbn: _scanResultListForBarcode.elementAt(index).rawValue!,
             ),
           ),
         );
@@ -68,7 +68,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              scanResultListForBarcode.elementAt(index).rawValue.toString(),
+              _scanResultListForBarcode.elementAt(index).rawValue.toString(),
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Column(
@@ -104,9 +104,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
         }
         return a.rawValue!.compareTo(b.rawValue!);
       });
-    if (scanResultListForBarcode != barcodes) {
+    if (_scanResultListForBarcode != barcodes) {
       setState(() {
-        scanResultListForBarcode = barcodes;
+        _scanResultListForBarcode = barcodes;
       });
     }
   }

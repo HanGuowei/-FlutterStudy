@@ -63,10 +63,15 @@ class _AmazonResultScreenState extends State<AmazonResultScreen> {
     //   sum += digit * (10 - index);
     // });
     // 3. implement using fold
-    var i = 0;
-    final sum = digits.fold(0, (previousValue, element) {
-      return previousValue + int.parse(element) * (10 - i++);
-    });
+    // var i = 0;
+    // final sum = digits.fold(0, (previousValue, element) {
+    //   return previousValue + int.parse(element) * (10 - i++);
+    // });
+    final sum = digits.asMap().entries.fold(
+          0,
+          (previousValue, element) =>
+              previousValue + int.parse(element.value) * (10 - element.key),
+        );
     final checkDigit = 11 - sum % 11;
     final isbn10 = isbn13.substring(3, 12) + checkDigit.toString();
     return isbn10;
