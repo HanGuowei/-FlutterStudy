@@ -7,7 +7,7 @@ part of 'source_bean.dart';
 // **************************************************************************
 
 SourceBean _$SourceBeanFromJson(Map<String, dynamic> json) => SourceBean(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       name: json['name'] as String,
     );
 

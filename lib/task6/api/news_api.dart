@@ -1,34 +1,29 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_study/task6/model/article_bean.dart';
+import 'package:flutter_study/task6/model/news_bean.dart';
 
 class NewsApi {
   String api = 'https://newsapi.org';
-  final dio = Dio();
+  final dio = Dio()
+    ..options.headers = {"X-Api-Key": "0b99e4557cbd4f3f85e11cddde8a38a9"};
 
-  Future<ArticlesBean?> everything(
+  Future<NewsBean> everything(
     String query,
     List<SearchIn> searchIn,
-    String sources,
-    DateTime from,
-    DateTime to,
     Language language,
     int page,
     int pageSize,
   ) async {
-    final response = await dio.get<ArticlesBean>(
+    final response = await dio.get<Map<String, dynamic>>(
       '$api/v2/everything',
       queryParameters: {
         'q': query,
         'qInTitle': searchIn.map((e) => e.name).join(','),
-        'sources': sources,
-        'from': from.toIso8601String(),
-        'to': to.toIso8601String(),
         'language': language.name,
         'page': page,
         'pageSize': pageSize,
       },
     );
-    return response.data;
+    return NewsBean.fromJson(response.data!);
   }
 }
 

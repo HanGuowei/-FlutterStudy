@@ -20,11 +20,11 @@ class ArticlesBean {
       _$ArticlesBeanFromJson(json);
 
   final SourceBean? source;
-  final String author;
+  final String? author;
   final String title;
   final String description;
   final String url;
-  final String urlToImage;
+  final String? urlToImage;
   final String publishedAt;
   final String content;
 }

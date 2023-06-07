@@ -9,6 +9,6 @@ class SourceBean {
   factory SourceBean.fromJson(Map<String, dynamic> json) =>
       _$SourceBeanFromJson(json);
 
-  late String id;
+  late String? id;
   late String name;
 }

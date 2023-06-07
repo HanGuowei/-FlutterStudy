@@ -10,11 +10,10 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-  o
-
   final NewsApi _newsApi = NewsApi();
   int _currentPage = 1;
   bool _isMoreLoading = false;
+  bool _isMaxResult = false;
   final List<ArticlesBean> _articles = [];
 
   final _searchController = TextEditingController();
@@ -25,97 +24,168 @@ class _NewsScreenState extends State<NewsScreen> {
     SearchIn.description,
     SearchIn.content
   ];
-  final String sources = '';
-  final DateTime from = DateTime.now();
+  final DateTime from = DateTime.utc(2000);
   final DateTime to = DateTime.now();
   final Language language = Language.en;
+
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    _scrollController.addListener(_scrollListener);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         _filterBarBuild(),
-        // _newsListBuild(),
-      ],
-    );
-  }
-
-  Widget _filterBarBuild() {
-    final statusBarHeight = MediaQuery
-        .of(context)
-        .padding
-        .top;
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: statusBarHeight),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Keyword Search',
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: _searchController.clear,
-                ),
-                prefixIcon: IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {
-                    // Perform the search here
-                  },
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            ),
-          ),
+        Expanded(
+          child: _newsListBuild(context),
         )
       ],
     );
   }
 
-  Widget _newsListBuild() {
+  Widget _filterBarBuild() {
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+    return Padding(
+      padding: EdgeInsets.only(top: statusBarHeight),
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: TextField(
+          controller: _searchController,
+          decoration: InputDecoration(
+            hintText: 'Keyword Search',
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: _search,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _newsListBuild(BuildContext context) {
     return RefreshIndicator(
+      onRefresh: _search,
       child: ListView.builder(
+        controller: _scrollController,
         itemCount: _articles.length + 1,
         itemBuilder: (context, index) {
           if (index < _articles.length) {
-            return const Text('article');
+            return _articleBuild(context, _articles[index]);
           } else {
-            if (_isMoreLoading) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(5),
-                  child: CircularProgressIndicator(),
-                ),
-              );
+            if (_isMaxResult) {
+              return const Text('No more articles');
             } else {
-              return null;
+              if (_isMoreLoading) {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              } else {
+                return null;
+              }
             }
           }
         },
       ),
-      onRefresh: () async {
-        // return null;
-      },
     );
   }
 
-// Future<void> _loadMoreNews() async {
-//   final issues = await _newsApi.everything(
-//       'flutter',
-//       searchIn,
-//       sources,
-//       from,
-//       to,
-//       language,
-//       page,
-//       pageSize)
-//   _currentIssuePage++;
-//   setState(() {
-//     _issues.addAll(issues);
-//   });
-// }
+  Widget _articleBuild(BuildContext context, ArticlesBean article) {
+    return GestureDetector(
+      onTap: _navigationToDetail,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    article.title,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Text(
+                    article.author ?? '',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelSmall
+                        ?.copyWith(color: Colors.grey),
+                  )
+                ],
+              ),
+            ),
+            if (article.urlToImage != null)
+              Expanded(
+                flex: 2,
+                child: Image.network(article.urlToImage ?? ''),
+              )
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      // 滚动到列表底部触发加载更多
+      if (!_isMoreLoading) {
+        setState(() {
+          _isMoreLoading = true;
+        });
+        _loadMoreNews();
+      }
+    }
+  }
+
+  Future<void> _loadMoreNews() async {
+    try {
+      final news = await _newsApi.everything(
+        _searchController.text,
+        searchIn,
+        language,
+        _currentPage,
+        20,
+      );
+      _currentPage++;
+      setState(() {
+        _articles.addAll(news.articles);
+        _isMoreLoading = false;
+      });
+    } on Exception catch (e) {
+      setState(() {
+        _isMoreLoading = false;
+        _isMaxResult = true;
+      });
+    }
+  }
+
+  Future<void> _search() {
+    setState(() {
+      _currentPage = 1;
+      _articles.clear();
+      _isMoreLoading = true;
+      _isMaxResult = false;
+    });
+    _loadMoreNews();
+    return Future(() => null);
+  }
+
+  void _navigationToDetail() {
+    Navigator.of(context).pushNamed('/news_detail');
+  }
 }
