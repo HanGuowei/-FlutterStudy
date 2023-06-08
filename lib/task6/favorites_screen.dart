@@ -28,16 +28,18 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             itemBuilder: (context, index) {
               final article = articles[index];
               return Article(
-                  onTap: () {
-                    _navigationToDetail(article);
-                  },
-                  articlesBean: article);
+                onTap: () {
+                  _navigationToDetail(article);
+                },
+                articlesBean: article,
+              );
             },
           );
         },
       ),
     );
   }
+
   void _navigationToDetail(ArticlesBean article) {
     Navigator.of(context).push(
       MaterialPageRoute<NewsDetailScreen>(

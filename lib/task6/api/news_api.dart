@@ -4,7 +4,7 @@ import 'package:flutter_study/task6/entity/news_bean.dart';
 class NewsApi {
   String api = 'https://newsapi.org';
   final dio = Dio()
-    ..options.headers = {"X-Api-Key": "0b99e4557cbd4f3f85e11cddde8a38a9"};
+    ..options.headers = {'X-Api-Key': '0b99e4557cbd4f3f85e11cddde8a38a9'};
 
   Future<NewsBean> everything(
     String query,

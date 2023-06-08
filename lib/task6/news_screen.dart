@@ -123,7 +123,7 @@ class _NewsScreenState extends State<NewsScreen> {
         _articles.addAll(news.articles);
         _isMoreLoading = false;
       });
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       setState(() {
         _isMoreLoading = false;
         _isMaxResult = true;

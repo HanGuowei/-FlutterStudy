@@ -6,13 +6,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoriteStoreModel extends ChangeNotifier {
   late SharedPreferences preferences;
-  final key = 'favorite';
+  static const key = 'favorite';
 
   List<ArticlesBean> get storedList =>
       preferences
           .getStringList(key)
-          ?.map((e) =>
-              ArticlesBean.fromJson(json.decode(e) as Map<String, dynamic>))
+          ?.map(
+            (e) =>
+                ArticlesBean.fromJson(json.decode(e) as Map<String, dynamic>),
+          )
           .toList() ??
       [];
 
