@@ -1,4 +1,4 @@
-import 'package:flutter_study/task6/model/source_bean.dart';
+import 'package:flutter_study/task6/entity/source_bean.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'article_bean.g.dart';
@@ -18,6 +18,8 @@ class ArticlesBean {
 
   factory ArticlesBean.fromJson(Map<String, dynamic> json) =>
       _$ArticlesBeanFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ArticlesBeanToJson(this);
 
   final SourceBean? source;
   final String? author;

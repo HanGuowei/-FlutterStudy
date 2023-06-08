@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   json_annotation: ^4.8.1
   shared_preferences: ^2.1.1
+  webview_flutter: ^4.2.2
+  provider: ^6.0.5
 
 
 dev_dependencies:

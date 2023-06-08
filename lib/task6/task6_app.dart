@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_study/task6/favorite_store_model.dart';
+import 'package:flutter_study/task6/favorites_screen.dart';
 import 'package:flutter_study/task6/news_screen.dart';
+import 'package:provider/provider.dart';
 
 class Task6App extends StatefulWidget {
   const Task6App({super.key});
@@ -26,7 +29,7 @@ class _Task6AppState extends State<Task6App> {
           index: _currentTab,
           children: const [
             NewsScreen(),
-            Placeholder(),
+            FavoritesScreen(),
           ],
         ),
       ),

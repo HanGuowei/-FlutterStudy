@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_study/task6/model/news_bean.dart';
+import 'package:flutter_study/task6/entity/news_bean.dart';
 
 class NewsApi {
   String api = 'https://newsapi.org';
@@ -8,8 +8,6 @@ class NewsApi {
 
   Future<NewsBean> everything(
     String query,
-    List<SearchIn> searchIn,
-    Language language,
     int page,
     int pageSize,
   ) async {
@@ -17,8 +15,6 @@ class NewsApi {
       '$api/v2/everything',
       queryParameters: {
         'q': query,
-        'qInTitle': searchIn.map((e) => e.name).join(','),
-        'language': language.name,
         'page': page,
         'pageSize': pageSize,
       },
