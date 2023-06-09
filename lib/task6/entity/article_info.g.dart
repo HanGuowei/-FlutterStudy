@@ -1,15 +1,15 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'article_bean.dart';
+part of 'article_info.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ArticlesBean _$ArticlesBeanFromJson(Map<String, dynamic> json) => ArticlesBean(
+ArticleInfo _$ArticleInfoFromJson(Map<String, dynamic> json) => ArticleInfo(
       source: json['source'] == null
           ? null
-          : SourceBean.fromJson(json['source'] as Map<String, dynamic>),
+          : Source.fromJson(json['source'] as Map<String, dynamic>),
       author: json['author'] as String?,
       title: json['title'] as String,
       description: json['description'] as String,
@@ -19,7 +19,7 @@ ArticlesBean _$ArticlesBeanFromJson(Map<String, dynamic> json) => ArticlesBean(
       content: json['content'] as String,
     );
 
-Map<String, dynamic> _$ArticlesBeanToJson(ArticlesBean instance) =>
+Map<String, dynamic> _$ArticleInfoToJson(ArticleInfo instance) =>
     <String, dynamic>{
       'source': instance.source,
       'author': instance.author,

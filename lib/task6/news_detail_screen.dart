@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_study/task6/entity/article_bean.dart';
+import 'package:flutter_study/task6/entity/article_info.dart';
 import 'package:flutter_study/task6/favorite_store_model.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -7,7 +7,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 class NewsDetailScreen extends StatefulWidget {
   const NewsDetailScreen({super.key, required this.article});
 
-  final ArticlesBean article;
+  final ArticleInfo article;
 
   @override
   State<NewsDetailScreen> createState() => _NewsDetailScreenState();

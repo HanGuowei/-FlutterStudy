@@ -1,18 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'source_bean.dart';
+part of 'source.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-SourceBean _$SourceBeanFromJson(Map<String, dynamic> json) => SourceBean(
+Source _$SourceFromJson(Map<String, dynamic> json) => Source(
       id: json['id'] as String?,
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$SourceBeanToJson(SourceBean instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$SourceToJson(Source instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
     };

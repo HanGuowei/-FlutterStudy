@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_study/task6/api/news_api.dart';
 import 'package:flutter_study/task6/article.dart';
-import 'package:flutter_study/task6/entity/article_bean.dart';
+import 'package:flutter_study/task6/entity/article_info.dart';
 import 'package:flutter_study/task6/news_detail_screen.dart';
 
 class NewsScreen extends StatefulWidget {
@@ -16,7 +16,7 @@ class _NewsScreenState extends State<NewsScreen> {
   int _currentPage = 1;
   bool _isMoreLoading = false;
   bool _isMaxResult = false;
-  final List<ArticlesBean> _articles = [];
+  final List<ArticleInfo> _articles = [];
   final _searchController = TextEditingController();
   final _scrollController = ScrollController();
 
@@ -142,7 +142,7 @@ class _NewsScreenState extends State<NewsScreen> {
     return Future(() => null);
   }
 
-  void _navigationToDetail(ArticlesBean article) {
+  void _navigationToDetail(ArticleInfo article) {
     Navigator.of(context).push(
       MaterialPageRoute<NewsDetailScreen>(
         builder: (context) => NewsDetailScreen(

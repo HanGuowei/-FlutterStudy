@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_study/task6/entity/news_bean.dart';
+import 'package:flutter_study/task6/entity/news.dart';
 
 class NewsApi {
   String api = 'https://newsapi.org';
   final dio = Dio()
     ..options.headers = {'X-Api-Key': '0b99e4557cbd4f3f85e11cddde8a38a9'};
 
-  Future<NewsBean> everything(
+  Future<News> everything(
     String query,
     int page,
     int pageSize,
@@ -19,7 +19,7 @@ class NewsApi {
         'pageSize': pageSize,
       },
     );
-    return NewsBean.fromJson(response.data!);
+    return News.fromJson(response.data!);
   }
 }
 

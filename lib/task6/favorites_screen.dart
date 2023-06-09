@@ -3,7 +3,7 @@ import 'package:flutter_study/task6/article.dart';
 import 'package:flutter_study/task6/favorite_store_model.dart';
 import 'package:provider/provider.dart';
 
-import 'entity/article_bean.dart';
+import 'entity/article_info.dart';
 import 'news_detail_screen.dart';
 
 class FavoritesScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
-  void _navigationToDetail(ArticlesBean article) {
+  void _navigationToDetail(ArticleInfo article) {
     Navigator.of(context).push(
       MaterialPageRoute<NewsDetailScreen>(
         builder: (context) => NewsDetailScreen(

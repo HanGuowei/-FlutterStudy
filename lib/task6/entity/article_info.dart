@@ -1,11 +1,11 @@
-import 'package:flutter_study/task6/entity/source_bean.dart';
+import 'package:flutter_study/task6/entity/source.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'article_bean.g.dart';
+part 'article_info.g.dart';
 
 @JsonSerializable()
-class ArticlesBean {
-  ArticlesBean({
+class ArticleInfo {
+  ArticleInfo({
     this.source,
     required this.author,
     required this.title,
@@ -16,12 +16,12 @@ class ArticlesBean {
     required this.content,
   });
 
-  factory ArticlesBean.fromJson(Map<String, dynamic> json) =>
-      _$ArticlesBeanFromJson(json);
+  factory ArticleInfo.fromJson(Map<String, dynamic> json) =>
+      _$ArticleInfoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ArticlesBeanToJson(this);
+  Map<String, dynamic> toJson() => _$ArticleInfoToJson(this);
 
-  final SourceBean? source;
+  final Source? source;
   final String? author;
   final String title;
   final String description;

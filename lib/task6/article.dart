@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'entity/article_bean.dart';
+import 'entity/article_info.dart';
 
 // typedef GestureTapCallback = void Function();
 class Article extends StatefulWidget {
   const Article({super.key, required this.onTap, required this.articlesBean});
 
   final GestureTapCallback onTap;
-  final ArticlesBean articlesBean;
+  final ArticleInfo articlesBean;
 
   @override
   State<Article> createState() => _ArticleState();
