@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_study/task6/api/news_api.dart';
 import 'package:flutter_study/task6/article.dart';
+import 'package:flutter_study/task6/component/filter_bar.dart';
 import 'package:flutter_study/task6/entity/article_info.dart';
 import 'package:flutter_study/task6/news_detail_screen.dart';
 
@@ -27,37 +28,26 @@ class _NewsScreenState extends State<NewsScreen> {
   }
 
   @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_scrollListener)
+      ..dispose();
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _filterBarBuild(),
+        FilterBar(
+          searchController: _searchController,
+          onSearch: _search,
+        ),
         Expanded(
           child: _newsListBuild(context),
         )
       ],
-    );
-  }
-
-  Widget _filterBarBuild() {
-    final statusBarHeight = MediaQuery.of(context).padding.top;
-    return Padding(
-      padding: EdgeInsets.only(top: statusBarHeight),
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: TextField(
-          controller: _searchController,
-          decoration: InputDecoration(
-            hintText: 'Keyword Search',
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: _search,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-        ),
-      ),
     );
   }
 
@@ -76,21 +66,17 @@ class _NewsScreenState extends State<NewsScreen> {
               },
               articlesBean: _articles[index],
             );
-          } else {
-            if (_isMaxResult) {
-              return const Text('No more articles');
-            } else {
-              if (_isMoreLoading) {
-                return const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              } else {
-                return null;
-              }
-            }
+          }
+          if (_isMaxResult) {
+            return const Text('No more articles');
+          }
+          if (_isMoreLoading) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.all(5),
+                child: CircularProgressIndicator(),
+              ),
+            );
           }
         },
       ),
