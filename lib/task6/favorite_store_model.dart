@@ -1,10 +1,17 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_study/task6/entity/article_info.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FavoriteStoreModel extends ChangeNotifier {
+final favoriteStoreProvider =
+    StateNotifierProvider<FavoriteStoreModel, List<ArticleInfo>>(
+  (ref) => FavoriteStoreModel()..init(),
+);
+
+class FavoriteStoreModel extends StateNotifier<List<ArticleInfo>> {
+  FavoriteStoreModel() : super([]);
+
   late SharedPreferences preferences;
   static const key = 'favorite';
 
@@ -20,10 +27,12 @@ class FavoriteStoreModel extends ChangeNotifier {
   Future<void> _storeArticleList(List<ArticleInfo> list) async {
     final value = list.map((e) => json.encode(e.toJson())).toList();
     await preferences.setStringList(key, value);
+    state = storedList;
   }
 
   Future<void> init() async {
     preferences = await SharedPreferences.getInstance();
+    state = storedList;
   }
 
   Future<void> addItem(ArticleInfo article) async {
@@ -32,13 +41,11 @@ class FavoriteStoreModel extends ChangeNotifier {
       origin.add(article);
     }
     await _storeArticleList(origin);
-    notifyListeners();
   }
 
   Future<void> removeItem(ArticleInfo article) async {
     final origin = storedList
       ..removeWhere((element) => element.url == article.url);
     await _storeArticleList(origin);
-    notifyListeners();
   }
 }
