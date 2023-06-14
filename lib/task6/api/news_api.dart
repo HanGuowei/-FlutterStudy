@@ -21,6 +21,24 @@ class NewsApi {
     );
     return News.fromJson(response.data!);
   }
+
+  Future<News> topHeadlines(
+    String q,
+    String? category,
+    int page,
+    int pageSize,
+  ) async {
+    final response = await dio.get<Map<String, dynamic>>(
+      '$api/v2/top-headlines',
+      queryParameters: {
+        'q': q,
+        'category': category,
+        'page': page,
+        'pageSize': pageSize,
+      },
+    );
+    return News.fromJson(response.data!);
+  }
 }
 
 enum SearchIn { title, description, content }
