@@ -24,7 +24,7 @@ class NewsApi {
 
   Future<News> topHeadlines(
     String q,
-    String? category,
+    Category? category,
     int page,
     int pageSize,
   ) async {
@@ -32,7 +32,7 @@ class NewsApi {
       '$api/v2/top-headlines',
       queryParameters: {
         'q': q,
-        'category': category,
+        'category': category?.name,
         'page': page,
         'pageSize': pageSize,
       },
@@ -49,4 +49,14 @@ enum SortBy {
   relevancy,
   popularity,
   publishedAt,
+}
+
+enum Category {
+  business,
+  entertainment,
+  general,
+  health,
+  science,
+  sports,
+  technology,
 }

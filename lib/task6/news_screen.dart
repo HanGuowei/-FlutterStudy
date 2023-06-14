@@ -18,6 +18,7 @@ class _NewsScreenState extends State<NewsScreen> {
   bool _isMoreLoading = false;
   bool _isMaxResult = false;
   final List<ArticleInfo> _articles = [];
+  Category? category;
   final _searchController = TextEditingController();
   final _scrollController = ScrollController();
 
@@ -42,7 +43,14 @@ class _NewsScreenState extends State<NewsScreen> {
       children: [
         FilterBar(
           searchController: _searchController,
+          category: category,
           onSearch: _search,
+          onCategoryChange: (newCategory) {
+            setState(() {
+              category = newCategory;
+            });
+            _search();
+          },
         ),
         Expanded(
           child: _newsListBuild(context),
@@ -100,8 +108,9 @@ class _NewsScreenState extends State<NewsScreen> {
 
   Future<void> _loadMoreNews() async {
     try {
-      final news = await _newsApi.everything(
+      final news = await _newsApi.topHeadlines(
         _searchController.text,
+        category,
         _currentPage,
         20,
       );
