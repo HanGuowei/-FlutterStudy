@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'article_info.dart';
@@ -5,8 +6,9 @@ import 'article_info.dart';
 part 'news.g.dart';
 
 @JsonSerializable()
+@immutable
 class News {
-  News({
+  const News({
     required this.status,
     required this.totalResults,
     required this.articles,
