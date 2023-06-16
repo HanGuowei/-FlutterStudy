@@ -63,6 +63,7 @@ class _FilterBarState extends State<FilterBar> {
         DropdownButton(
           items: [
             const DropdownMenuItem(
+              // ignore: avoid_redundant_argument_values
               value: null,
               child: Text('All'),
             ),

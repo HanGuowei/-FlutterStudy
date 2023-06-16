@@ -56,6 +56,5 @@ class _NewsDetailScreenState extends ConsumerState<NewsDetailScreen> {
         icon: const Icon(Icons.favorite),
       );
     }
-    ;
   }
 }
