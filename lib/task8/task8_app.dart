@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_study/task8/screen/todo_tasks_screen.dart';
+import 'package:flutter_study/task8/screen/home_screen.dart';
 
 class Task8App extends StatelessWidget {
   const Task8App({super.key});
@@ -12,12 +12,7 @@ class Task8App extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Task 8: Task APP'),
-        ),
-        body: const TodoTasksScreen(),
-      ),
+      home: const HomeScreen(),
     );
   }
 }
