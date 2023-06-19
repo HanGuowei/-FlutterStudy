@@ -3,6 +3,8 @@ import 'package:flutter_study/task8/screen/done_tasks_screen.dart';
 import 'package:flutter_study/task8/screen/new_task_screen.dart';
 import 'package:flutter_study/task8/screen/todo_tasks_screen.dart';
 
+import '../widget/category_selector.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -18,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_currentTabIndex == 0 ? 'TO-DO TASKS' : 'DONE TASKS'),
+        actions: const [CategorySelector()],
       ),
       floatingActionButton: _currentTabIndex == 0
           ? FloatingActionButton(
