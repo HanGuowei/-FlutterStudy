@@ -8,9 +8,10 @@ class Task8App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Task 8: Task APP',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        primarySwatch: Colors.blue,
+        colorSchemeSeed: Colors.blue,
       ),
       home: const HomeScreen(),
     );

@@ -19,8 +19,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_currentTabIndex == 0 ? 'TO-DO TASKS' : 'DONE TASKS'),
-        actions: const [CategorySelector()],
+        title: Text(_currentTabIndex == 0 ? 'TO-DO' : 'DONE'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+            child: FittedBox(
+              child: CategorySelector(
+                value: '仕事',
+                categories: const ['仕事', '日常の雑務', '記念日の計画'],
+                onChanged: (v) {},
+              ),
+            ),
+          )
+        ],
       ),
       floatingActionButton: _currentTabIndex == 0
           ? FloatingActionButton(
