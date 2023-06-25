@@ -13,6 +13,9 @@ dependencies:
   provider: ^6.0.5
   shared_preferences: ^2.1.1
   webview_flutter: ^4.2.2
+  flutter_riverpod: ^2.3.6
+  riverpod_annotation: ^2.1.1
+  riverpod_generator: ^2.2.3
 
 
 dev_dependencies:
@@ -22,6 +25,7 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^6.7.0
   pedantic_mono: any
+  riverpod_lint: ^1.3.2
 
 flutter:
   uses-material-design: true

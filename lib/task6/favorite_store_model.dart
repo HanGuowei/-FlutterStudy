@@ -1,44 +1,59 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_study/task6/entity/article_info.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FavoriteStoreModel extends ChangeNotifier {
-  late SharedPreferences preferences;
-  static const key = 'favorite';
+part 'favorite_store_model.g.dart';
 
-  List<ArticleInfo> get storedList =>
-      preferences
-          .getStringList(key)
-          ?.map(
-            (e) => ArticleInfo.fromJson(json.decode(e) as Map<String, dynamic>),
-          )
-          .toList() ??
-      [];
+const _key = 'favorite';
+
+@riverpod
+Future<SharedPreferences> getSharedPreferences(
+  GetSharedPreferencesRef ref,
+) async {
+  return SharedPreferences.getInstance();
+}
+
+@riverpod
+class FavoriteArticles extends _$FavoriteArticles {
+  @override
+  List<ArticleInfo> build() {
+    final prefs = ref.watch(getSharedPreferencesProvider);
+    final list = prefs.value
+            ?.getStringList(_key)
+            ?.map(
+              (e) =>
+                  ArticleInfo.fromJson(json.decode(e) as Map<String, dynamic>),
+            )
+            .toList() ??
+        [];
+    return list;
+  }
 
   Future<void> _storeArticleList(List<ArticleInfo> list) async {
     final value = list.map((e) => json.encode(e.toJson())).toList();
-    await preferences.setStringList(key, value);
-  }
-
-  Future<void> init() async {
-    preferences = await SharedPreferences.getInstance();
+    final isSuccess = await ref
+        .watch(getSharedPreferencesProvider)
+        .value
+        ?.setStringList(_key, value);
+    if (isSuccess != null && isSuccess) {
+      state = list;
+    }
   }
 
   Future<void> addItem(ArticleInfo article) async {
-    final origin = storedList;
-    if (!origin.any((element) => element.url == article.url)) {
-      origin.add(article);
+    if (!state.any((element) => element.url == article.url)) {
+      final newList = [...state, article];
+      await _storeArticleList(newList);
     }
-    await _storeArticleList(origin);
-    notifyListeners();
   }
 
   Future<void> removeItem(ArticleInfo article) async {
-    final origin = storedList
-      ..removeWhere((element) => element.url == article.url);
-    await _storeArticleList(origin);
-    notifyListeners();
+    final newList = [
+      for (final t in state)
+        if (t.url != article.url) t
+    ];
+    await _storeArticleList(newList);
   }
 }
