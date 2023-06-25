@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_study/task6/favorites_screen.dart';
 import 'package:flutter_study/task6/news_screen.dart';
 
@@ -14,21 +15,23 @@ class _Task6AppState extends State<Task6App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Task 6: News',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        bottomNavigationBar: navigationBarBuild(),
-        body: IndexedStack(
-          index: _currentTab,
-          children: const [
-            NewsScreen(),
-            FavoritesScreen(),
-          ],
+    return ProviderScope(
+      child: MaterialApp(
+        title: 'Task 6: News',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
+          primarySwatch: Colors.blue,
+        ),
+        home: Scaffold(
+          bottomNavigationBar: navigationBarBuild(),
+          body: IndexedStack(
+            index: _currentTab,
+            children: const [
+              NewsScreen(),
+              FavoritesScreen(),
+            ],
+          ),
         ),
       ),
     );

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_study/task6/entity/article_info.dart';
 import 'package:flutter_study/task6/favorite_store_model.dart';
-import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class NewsDetailScreen extends StatefulWidget {
+class NewsDetailScreen extends ConsumerStatefulWidget {
   const NewsDetailScreen({super.key, required this.article});
 
   final ArticleInfo article;
 
   @override
-  State<NewsDetailScreen> createState() => _NewsDetailScreenState();
+  ConsumerState<NewsDetailScreen> createState() => _NewsDetailScreenState();
 }
 
-class _NewsDetailScreenState extends State<NewsDetailScreen> {
+class _NewsDetailScreenState extends ConsumerState<NewsDetailScreen> {
   final _webViewController = WebViewController();
 
   @override
@@ -24,33 +24,29 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final favoriteArticles = ref.watch(favoriteArticlesProvider);
+    final favoriteArticlesNotifier =
+        ref.read(favoriteArticlesProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.article.title),
         actions: [
-          Consumer<FavoriteStoreModel>(
-            builder: (context, model, child) {
-              if (model.storedList
-                  .any((element) => element.url == widget.article.url)) {
-                return IconButton(
+          (favoriteArticles.any((element) => element.url == widget.article.url))
+              ? IconButton(
                   onPressed: () {
-                    model.removeItem(widget.article);
+                    favoriteArticlesNotifier.removeItem(widget.article);
                   },
                   icon: const Icon(
                     Icons.favorite,
                     color: Colors.red,
                   ),
-                );
-              } else {
-                return IconButton(
+                )
+              : IconButton(
                   onPressed: () {
-                    model.addItem(widget.article);
+                    favoriteArticlesNotifier.addItem(widget.article);
                   },
                   icon: const Icon(Icons.favorite),
-                );
-              }
-            },
-          )
+                )
         ],
       ),
       body: WebViewWidget(controller: _webViewController),

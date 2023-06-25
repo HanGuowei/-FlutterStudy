@@ -1,39 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_study/task6/article.dart';
 import 'package:flutter_study/task6/favorite_store_model.dart';
-import 'package:provider/provider.dart';
 
 import 'entity/article_info.dart';
 import 'news_detail_screen.dart';
 
-class FavoritesScreen extends StatefulWidget {
+class FavoritesScreen extends ConsumerStatefulWidget {
   const FavoritesScreen({super.key});
 
   @override
-  State<FavoritesScreen> createState() => _FavoritesScreenState();
+  ConsumerState<FavoritesScreen> createState() => _FavoritesScreenState();
 }
 
-class _FavoritesScreenState extends State<FavoritesScreen> {
+class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
+    final articles = ref.watch(favoriteArticlesProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Favorite'),
       ),
-      body: Consumer<FavoriteStoreModel>(
-        builder: (context, model, child) {
-          final articles = model.storedList;
-          return ListView.builder(
-            itemCount: articles.length,
-            itemBuilder: (context, index) {
-              final article = articles[index];
-              return Article(
-                onTap: () {
-                  _navigationToDetail(article);
-                },
-                articlesBean: article,
-              );
+      body: ListView.builder(
+        itemCount: articles.length,
+        itemBuilder: (context, index) {
+          final article = articles[index];
+          return Article(
+            onTap: () {
+              _navigationToDetail(article);
             },
+            articlesBean: article,
           );
         },
       ),
