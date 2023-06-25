@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_study/config.dart';
 import 'package:flutter_study/task6/entity/news.dart';
 
 class NewsApi {
   String api = 'https://newsapi.org';
-  final dio = Dio()
-    ..options.headers = {'X-Api-Key': '0b99e4557cbd4f3f85e11cddde8a38a9'};
+  final dio = Dio()..options.headers = {'X-Api-Key': Config.newsApiKey};
 
   Future<News> everything(
     String query,
