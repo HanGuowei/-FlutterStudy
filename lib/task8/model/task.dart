@@ -1,10 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'task.g.dart';
 
 @JsonSerializable()
+@immutable
 class Task {
-  Task(
+  const Task(
     this.id,
     this.title,
     this.description,
@@ -18,7 +20,7 @@ class Task {
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 
-  final int id;
+  final String? id;
   final String title;
   final String description;
   final bool isCompleted;
@@ -31,7 +33,7 @@ class Task {
   Map<String, dynamic> toJson() => _$TaskToJson(this);
 
   Task copyWith({
-    int? id,
+    String? id,
     String? title,
     String? description,
     bool? isCompleted,
