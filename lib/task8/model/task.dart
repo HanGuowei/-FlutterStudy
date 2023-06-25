@@ -26,7 +26,7 @@ class Task {
   final bool isCompleted;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final DateTime completedAt;
+  final DateTime? completedAt;
   final DateTime dueDate;
   final String category;
 

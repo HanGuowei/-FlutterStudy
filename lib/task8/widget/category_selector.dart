@@ -10,7 +10,7 @@ class CategorySelector extends StatefulWidget {
 
   final String value;
   final List<String> categories;
-  final ValueChanged<String> onChanged;
+  final ValueChanged<String?> onChanged;
 
   @override
   State<CategorySelector> createState() => _CategorySelectorState();
@@ -42,9 +42,13 @@ class _CategorySelectorState extends State<CategorySelector> {
             ),
           ),
           dropdownMenuEntries: [
+            const DropdownMenuEntry(value: null, label: 'all'),
             for (String item in widget.categories)
               DropdownMenuEntry(value: item, label: item),
           ],
+          onSelected: (value) {
+            widget.onChanged(value);
+          },
         ),
       ),
     );

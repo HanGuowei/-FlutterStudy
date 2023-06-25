@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_study/task8/model/task.dart';
+import 'package:flutter_study/task8/state/tasks.dart';
+import 'package:flutter_study/task8/util/formDateTime.dart';
 import 'package:flutter_study/task8/widget/category_selector.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
-import 'package:intl/intl.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
 
-class NewTaskScreen extends StatefulWidget {
+class NewTaskScreen extends ConsumerStatefulWidget {
   const NewTaskScreen({super.key});
 
   @override
-  State<NewTaskScreen> createState() => _NewTaskScreenState();
+  ConsumerState<NewTaskScreen> createState() => _NewTaskScreenState();
 }
 
-class _NewTaskScreenState extends State<NewTaskScreen> {
+class _NewTaskScreenState extends ConsumerState<NewTaskScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _titleTextController = TextEditingController();
+  final _descriptionTextController = TextEditingController();
+  final _newCategoryTextController = TextEditingController();
+  String _selectedCategoryText = '';
   int _categoryTypeIndex = 0;
   DateTime _dueDateTime = DateTime.now();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _titleTextController.dispose();
+    _descriptionTextController.dispose();
+    _newCategoryTextController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +45,13 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
+                controller: _titleTextController,
                 decoration: const InputDecoration(
                   labelText: 'Title',
                 ),
               ),
               TextFormField(
+                controller: _descriptionTextController,
                 decoration: const InputDecoration(
                   labelText: 'Description',
                 ),
@@ -49,6 +66,10 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   }
 
   Widget _categoryBuild() {
+    final existCategories = ref.watch(getTasksCategoriesProvider);
+    if (_selectedCategoryText.isEmpty) {
+      _selectedCategoryText = existCategories.firstOrNull ?? '';
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,10 +96,17 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
-          labels: const ['new category', 'exist category'],
+          labels: [
+            'new category',
+            (existCategories.isNotEmpty)
+                ? 'exist category'
+                : 'no exist category',
+          ],
           selectedLabelIndex: (index) {
             setState(() {
-              _categoryTypeIndex = index;
+              if (existCategories.isNotEmpty) {
+                _categoryTypeIndex = index;
+              }
             });
           },
           isScroll: false,
@@ -88,13 +116,16 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
         ),
         _categoryTypeIndex == 0
             ? TextFormField(
+                controller: _newCategoryTextController,
                 decoration:
                     const InputDecoration(hintText: 'Input New Category'),
               )
             : CategorySelector(
-                value: '仕事',
-                categories: const ['仕事', '日常の雑務', '記念日の計画'],
-                onChanged: (v) {},
+                value: existCategories.first,
+                categories: existCategories.toList(),
+                onChanged: (category) {
+                  _selectedCategoryText = category ?? '';
+                },
               )
       ],
     );
@@ -107,7 +138,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
         const SizedBox(
           height: 20,
         ),
-        Text('Due DateTime ${_formatDateTime(_dueDateTime)}'),
+        Text('Due DateTime ${_dueDateTime.formatDateTime()}'),
         SizedBox(
           height: 140,
           child: ScrollDatePicker(
@@ -129,7 +160,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FilledButton(
-              onPressed: () {},
+              onPressed: _createNewTask,
               child: const Row(
                 children: [
                   Icon(Icons.add),
@@ -146,6 +177,21 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     );
   }
 
-  String _formatDateTime(DateTime dateTime) =>
-      DateFormat('yyyy/MM/dd').format(_dueDateTime);
+  void _createNewTask() {
+    final category = (_categoryTypeIndex == 0)
+        ? _newCategoryTextController.text
+        : _selectedCategoryText;
+    final task = Task(
+      null,
+      _titleTextController.text,
+      _descriptionTextController.text,
+      DateTime.timestamp(),
+      DateTime.timestamp(),
+      null,
+      _dueDateTime,
+      category,
+    );
+    ref.read(tasksProvider.notifier).addTask(task);
+    Navigator.pop(context);
+  }
 }
