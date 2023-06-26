@@ -17,22 +17,19 @@ class FilterBar extends StatefulWidget {
 class _FilterBarState extends State<FilterBar> {
   @override
   Widget build(BuildContext context) {
-    final statusBarHeight = MediaQuery.of(context).padding.top;
     return Padding(
-      padding: EdgeInsets.only(top: statusBarHeight),
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: TextField(
-          controller: widget.searchController,
-          decoration: InputDecoration(
-            hintText: 'Keyword Search',
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: widget.onSearch,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
+      padding: const EdgeInsets.all(5),
+      child: TextField(
+        controller: widget.searchController,
+        decoration: InputDecoration(
+          hintText: 'Keyword Search',
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: widget.onSearch,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
       ),

@@ -7,6 +7,7 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.1.2
+  dropdown_button2: ^1.5.1
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.1.0

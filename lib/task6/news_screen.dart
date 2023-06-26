@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_study/task6/api/news_api.dart';
 import 'package:flutter_study/task6/article.dart';
+import 'package:flutter_study/task6/component/category_selector.dart';
 import 'package:flutter_study/task6/component/filter_bar.dart';
 import 'package:flutter_study/task6/entity/article_info.dart';
 import 'package:flutter_study/task6/news_detail_screen.dart';
@@ -20,6 +21,7 @@ class _NewsScreenState extends State<NewsScreen> {
   final List<ArticleInfo> _articles = [];
   final _searchController = TextEditingController();
   final _scrollController = ScrollController();
+  String _category = 'all';
 
   @override
   void initState() {
@@ -38,16 +40,34 @@ class _NewsScreenState extends State<NewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FilterBar(
-          searchController: _searchController,
-          onSearch: _search,
-        ),
-        Expanded(
-          child: _newsListBuild(context),
-        )
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Headline'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+            child: CategorySelector(
+              value: _category,
+              onChanged: (category) {
+                setState(() {
+                  _category = category ?? 'all';
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          FilterBar(
+            searchController: _searchController,
+            onSearch: _search,
+          ),
+          Expanded(
+            child: _newsListBuild(context),
+          )
+        ],
+      ),
     );
   }
 
