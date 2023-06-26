@@ -22,7 +22,7 @@ class _NewsScreenState extends State<NewsScreen> {
   final List<ArticleInfo> _articles = [];
   final _searchController = TextEditingController();
   final _scrollController = ScrollController();
-  Category? _category = null;
+  Category? _category;
 
   @override
   void initState() {
