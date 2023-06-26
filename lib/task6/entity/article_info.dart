@@ -1,11 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_study/task6/entity/source.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'article_info.g.dart';
 
 @JsonSerializable()
+@immutable
 class ArticleInfo {
-  ArticleInfo({
+  const ArticleInfo({
     this.source,
     required this.author,
     required this.title,
