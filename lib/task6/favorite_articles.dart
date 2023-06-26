@@ -4,7 +4,7 @@ import 'package:flutter_study/task6/entity/article_info.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-part 'favorite_store_model.g.dart';
+part 'favorite_articles.g.dart';
 
 const _key = 'favorite';
 

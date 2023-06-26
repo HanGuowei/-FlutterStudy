@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_study/task6/article.dart';
-import 'package:flutter_study/task6/favorite_store_model.dart';
 
 import 'entity/article_info.dart';
+import 'favorite_articles.dart';
 import 'news_detail_screen.dart';
 
 class FavoritesScreen extends ConsumerStatefulWidget {

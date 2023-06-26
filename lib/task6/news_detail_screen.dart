@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_study/task6/entity/article_info.dart';
-import 'package:flutter_study/task6/favorite_store_model.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import 'favorite_articles.dart';
 
 class NewsDetailScreen extends ConsumerStatefulWidget {
   const NewsDetailScreen({super.key, required this.article});
