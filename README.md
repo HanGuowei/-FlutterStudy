@@ -15,3 +15,7 @@ Put the code in the lib/task5 directory.
 > 課題6-1. ニュースAPIを利用して、最新のニュースを表示するアプリを作成する
 
 Put the code in the lib/task6 directory. 
+
+> 課題7. ニュースAPIを利用して、最新のニュースを表示するアプリを作成する
+
+Task7 is based task6, Put the code in the lib/task6 directory too.
