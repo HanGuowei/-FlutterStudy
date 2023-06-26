@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_study/task6/api/category.dart';
 import 'package:flutter_study/task6/entity/news.dart';
 
 class NewsApi {
@@ -18,6 +19,24 @@ class NewsApi {
       '$api/v2/everything',
       queryParameters: {
         'q': query,
+        'page': page,
+        'pageSize': pageSize,
+      },
+    );
+    return News.fromJson(response.data!);
+  }
+
+  Future<News> topHeadlines(
+    String q,
+    Category? category,
+    int page,
+    int pageSize,
+  ) async {
+    final response = await dio.get<Map<String, dynamic>>(
+      '$api/v2/top-headlines',
+      queryParameters: {
+        'q': q,
+        'category': category?.name,
         'page': page,
         'pageSize': pageSize,
       },
