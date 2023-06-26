@@ -60,6 +60,7 @@ class _ArticleState extends State<Article> {
                     child: Image.network(
                       widget.articlesBean.urlToImage ?? '',
                       fit: BoxFit.fitHeight,
+                      errorBuilder: (context, object, stack) => Container(),
                     ),
                   )
               ],
