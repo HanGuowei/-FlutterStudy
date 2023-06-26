@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_study/task6/api/category.dart';
 import 'package:flutter_study/task6/api/news_api.dart';
 import 'package:flutter_study/task6/article.dart';
 import 'package:flutter_study/task6/component/category_selector.dart';
@@ -21,7 +22,7 @@ class _NewsScreenState extends State<NewsScreen> {
   final List<ArticleInfo> _articles = [];
   final _searchController = TextEditingController();
   final _scrollController = ScrollController();
-  String _category = 'all';
+  Category? _category = null;
 
   @override
   void initState() {
@@ -50,7 +51,7 @@ class _NewsScreenState extends State<NewsScreen> {
               value: _category,
               onChanged: (category) {
                 setState(() {
-                  _category = category ?? 'all';
+                  _category = category;
                 });
               },
             ),
@@ -120,8 +121,9 @@ class _NewsScreenState extends State<NewsScreen> {
 
   Future<void> _loadMoreNews() async {
     try {
-      final news = await _newsApi.everything(
+      final news = await _newsApi.topHeadlines(
         _searchController.text,
+        _category,
         _currentPage,
         20,
       );

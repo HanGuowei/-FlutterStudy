@@ -26,9 +26,9 @@ class ArticleInfo {
   final Source? source;
   final String? author;
   final String title;
-  final String description;
+  final String? description;
   final String url;
   final String? urlToImage;
-  final String publishedAt;
-  final String content;
+  final String? publishedAt;
+  final String? content;
 }
