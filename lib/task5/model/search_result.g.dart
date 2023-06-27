@@ -22,7 +22,7 @@ _$_RepositoryItem _$$_RepositoryItemFromJson(Map<String, dynamic> json) =>
     _$_RepositoryItem(
       id: json['id'] as int,
       name: json['name'] as String,
-      fullName: json['full_name'] as String,
+      fullName: json['fullName'] as String,
       description: json['description'] as String?,
     );
 
@@ -30,6 +30,6 @@ Map<String, dynamic> _$$_RepositoryItemToJson(_$_RepositoryItem instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'full_name': instance.fullName,
+      'fullName': instance.fullName,
       'description': instance.description,
     };
