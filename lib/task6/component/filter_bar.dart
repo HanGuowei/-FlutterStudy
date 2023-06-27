@@ -15,6 +15,7 @@ class FilterBar extends StatefulWidget {
 }
 
 class _FilterBarState extends State<FilterBar> {
+  final FocusNode _commentFocus = FocusNode();
   @override
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
@@ -23,12 +24,16 @@ class _FilterBarState extends State<FilterBar> {
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: TextField(
+          focusNode: _commentFocus,
           controller: widget.searchController,
           decoration: InputDecoration(
             hintText: 'Keyword Search',
             suffixIcon: IconButton(
               icon: const Icon(Icons.search),
-              onPressed: widget.onSearch,
+              onPressed: () {
+                _commentFocus.unfocus();
+                widget.onSearch();
+              },
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),

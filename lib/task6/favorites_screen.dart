@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_study/task6/article.dart';
 
 import 'entity/article_info.dart';
 import 'favorite_articles.dart';
 import 'news_detail_screen.dart';
 
-class FavoritesScreen extends ConsumerStatefulWidget {
+class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});
 
   @override
-  ConsumerState<FavoritesScreen> createState() => _FavoritesScreenState();
+  State<FavoritesScreen> createState() => _FavoritesScreenState();
 }
 
-class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
+class _FavoritesScreenState extends State<FavoritesScreen> {
+  List<ArticleInfo> articles = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _reloadFavoriteArticles();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final articles = ref.watch(favoriteArticlesProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Favorite'),
@@ -36,13 +42,20 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
     );
   }
 
-  void _navigationToDetail(ArticleInfo article) {
-    Navigator.of(context).push(
+  Future<void> _navigationToDetail(ArticleInfo article) async {
+    await Navigator.of(context).push(
       MaterialPageRoute<NewsDetailScreen>(
         builder: (context) => NewsDetailScreen(
           article: article,
         ),
       ),
     );
+    _reloadFavoriteArticles();
+  }
+
+  void _reloadFavoriteArticles() {
+    setState(() {
+      articles = FavoriteArticles().favoriteArticles();
+    });
   }
 }

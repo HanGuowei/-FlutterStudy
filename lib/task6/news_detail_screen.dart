@@ -16,41 +16,47 @@ class NewsDetailScreen extends ConsumerStatefulWidget {
 
 class _NewsDetailScreenState extends ConsumerState<NewsDetailScreen> {
   final _webViewController = WebViewController();
+  bool isFavorite = false;
 
   @override
   void initState() {
+    _initFavorite();
     _webViewController.loadRequest(Uri.parse(widget.article.url));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final favoriteArticles = ref.watch(favoriteArticlesProvider);
-    final favoriteArticlesNotifier =
-        ref.read(favoriteArticlesProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.article.title),
         actions: [
-          (favoriteArticles.any((element) => element.url == widget.article.url))
+          isFavorite
               ? IconButton(
-                  onPressed: () {
-                    favoriteArticlesNotifier.removeItem(widget.article);
-                  },
+                  onPressed: _clickFavorite,
                   icon: const Icon(
                     Icons.favorite,
                     color: Colors.red,
                   ),
                 )
               : IconButton(
-                  onPressed: () {
-                    favoriteArticlesNotifier.addItem(widget.article);
-                  },
+                  onPressed: _clickFavorite,
                   icon: const Icon(Icons.favorite),
                 )
         ],
       ),
       body: WebViewWidget(controller: _webViewController),
     );
+  }
+
+  Future<void> _clickFavorite() async {
+    await FavoriteArticles().favoriteOrNotArticle(widget.article);
+    await _initFavorite();
+  }
+
+  Future<void> _initFavorite() async {
+    setState(() {
+      isFavorite = FavoriteArticles().isFavoriteByUrl(widget.article.url);
+    });
   }
 }
