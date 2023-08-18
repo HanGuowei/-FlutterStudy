@@ -19,7 +19,7 @@ class _SecondChronographPageState extends State<SecondChronographPage> {
         appBar: AppBar(
           title: Text('task 3'),
         ),
-        body: Container(
+        body: Padding(
             padding: EdgeInsets.all(20.0),
             child: Column(
               children: <Widget>[
