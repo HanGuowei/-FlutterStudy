@@ -17,17 +17,19 @@ class _TodoListPageState extends State<TodoListPage> {
       appBar: AppBar(
         title: Text('task 2'),
       ),
-      body: _dataArray.isNotEmpty ? ListView.builder(
-        itemBuilder: (context, index) {
-          return TodoCell(
-            index: index,
-            todoContent: _dataArray[index],
-            deleteCallBack: (deleteIndex) => _deleteContent(deleteIndex),
-            editCallBack: (editIndex) => _changeContent(isAdd: false, index: editIndex),
-          );
-        },
-        itemCount: _dataArray.length,
-      ) : Center(child: Text('Please add content'),),
+      body: SafeArea(
+        child: _dataArray.isNotEmpty ? ListView.builder(
+          itemBuilder: (context, index) {
+            return TodoCell(
+              index: index,
+              todoContent: _dataArray[index],
+              deleteCallBack: (deleteIndex) => _deleteContent(deleteIndex),
+              editCallBack: (editIndex) => _changeContent(isAdd: false, index: editIndex),
+            );
+          },
+          itemCount: _dataArray.length,
+        ) : Center(child: Text('Please add content'),),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _changeContent(),
         child: Icon(Icons.add),
@@ -80,10 +82,12 @@ class _TodoListPageState extends State<TodoListPage> {
               ),
               onSaved: (value) {
                 setState(() {
-                  if (isAdd) {
-                    _dataArray.add(value!);
-                  } else {
-                    _dataArray[index] = value!;
+                  if (value != null && value.isNotEmpty) {
+                    if (isAdd) {
+                      _dataArray.add(value);
+                    } else {
+                      _dataArray[index] = value;
+                    }
                   }
                 });
               },
@@ -96,10 +100,10 @@ class _TodoListPageState extends State<TodoListPage> {
             ),
             TextButton(
               onPressed: () {
-                if (!_formKey.currentState!.validate()) {
+                if (!(_formKey.currentState?.validate() ?? false)) {
                   return;
                 }
-                _formKey.currentState!.save();
+                _formKey.currentState?.save();
                 Navigator.of(context).pop();
               },
               child: Text('sure'),
@@ -109,15 +113,11 @@ class _TodoListPageState extends State<TodoListPage> {
     );
   }
 
-  String? _addValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please input some text';
-    }
-    if (_dataArray.contains(value)) {
-      return 'This content is in list';
-    }
-    return null;
-  }
+  String? _addValidator(String? value) => switch (value) {
+    _ when value == null || value.isEmpty => 'Please input some text',
+    _ when _dataArray.contains(value) => 'This content is in list',
+    _ => null,
+  };
 
   String? _editValidator(String oldValue, String? newValue) {
     if (oldValue == newValue) {

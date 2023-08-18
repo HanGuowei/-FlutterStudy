@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String QuestionTitle = '課題1.ボタンを押すとカウントアップされるシンプルなカウンターアプリを作成する';
+const String questionTitle = '課題1.ボタンを押すとカウントアップされるシンプルなカウンターアプリを作成する';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,11 +30,19 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(QuestionTitle,),
-            SizedBox(height: 40,),
+            Text(
+              questionTitle,
+            ),
+            SizedBox(
+              height: 40,
+            ),
             // count
-            Text(_count.toString()),
-            SizedBox(height: 10,),
+            Text(
+              _count.toString(),
+            ),
+            SizedBox(
+              height: 10,
+            ),
             // + button
             FloatingActionButton(
               onPressed: _incrementCount,

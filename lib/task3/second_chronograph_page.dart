@@ -23,34 +23,53 @@ class _SecondChronographPageState extends State<SecondChronographPage> {
             padding: EdgeInsets.all(20.0),
             child: Column(
               children: <Widget>[
-                Text(_elapsedTime, style: TextStyle(fontSize: 25.0)),
-                SizedBox(height: 20.0),
+                Text(
+                  _elapsedTime,
+                  style: TextStyle(
+                    fontSize: 25.0,
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     FloatingActionButton(
-                        backgroundColor: Colors.green,
-                        onPressed: startWatch,
-                        child: Icon(Icons.play_arrow)),
-                    SizedBox(width: 20.0),
+                      backgroundColor: Colors.green,
+                      onPressed: startWatch,
+                      child: Icon(Icons.play_arrow),
+                    ),
+                    SizedBox(
+                      width: 20.0,
+                    ),
                     FloatingActionButton(
-                        backgroundColor: Colors.red,
-                        onPressed: stopWatch,
-                        child: Icon(Icons.stop)),
-                    SizedBox(width: 20.0),
+                      backgroundColor: Colors.red,
+                      onPressed: stopWatch,
+                      child: Icon(Icons.stop),
+                    ),
+                    SizedBox(
+                      width: 20.0,
+                    ),
                     FloatingActionButton(
-                        backgroundColor: Colors.blue,
-                        onPressed: resetWatch,
-                        child: Icon(Icons.refresh)),
+                      backgroundColor: Colors.blue,
+                      onPressed: resetWatch,
+                      child: Icon(Icons.refresh),
+                    ),
                   ],
                 )
               ],
-            )));
+            ),
+        ),
+    );
   }
 
   void startWatch() {
     _stopWatch.start();
-    _timer = Timer.periodic(Duration(milliseconds: 1000), updateTime);
+    _timer = Timer.periodic(
+      Duration(milliseconds: 1000),
+      updateTime,
+    );
   }
 
   void stopWatch() {
