@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Task',
-      home: const TodoListPage(),
+      home: const HomePage(),
     );
   }
 }
