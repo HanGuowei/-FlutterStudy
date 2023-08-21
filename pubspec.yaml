@@ -8,7 +8,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-
+  mobile_scanner: ^3.4.1
+  webview_flutter: ^4.2.2
 
 dev_dependencies:
 
