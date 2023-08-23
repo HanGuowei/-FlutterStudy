@@ -51,11 +51,11 @@ class _RepositoryListPageState extends State<RepositoryListPage> {
           header: const WaterDropHeader(),
           footer: CustomFooter(
             builder: (context, mode) {
-              return SizedBox(
+              return Container(
                 height: 55,
-                child: Center(
-                  child: _footerTipWidget(mode),
-                ),);
+                alignment: Alignment.center,
+                child: _footerTipWidget(mode),
+              );
             },
           ),
           controller: _refreshController,

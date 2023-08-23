@@ -115,29 +115,33 @@ class _IssuesViewState extends State<_IssuesView> {
 
   @override
   Widget build(BuildContext context) {
-    return _dataArray.isNotEmpty ? SmartRefresher(
-      enablePullUp: true,
-      header: const WaterDropHeader(),
-      footer: CustomFooter(
-        builder: (context, mode) {
-          return SizedBox(
-            height: 55,
-            child: Center(
+    if (_dataArray.isNotEmpty) {
+      return SmartRefresher(
+        enablePullUp: true,
+        header: const WaterDropHeader(),
+        footer: CustomFooter(
+          builder: (context, mode) {
+            return Container(
+              height: 55,
+              alignment: Alignment.center,
               child: _footerTipWidget(mode),
-            ),);
-        },
-      ),
-      controller: _refreshController,
-      onRefresh: _onRefresh,
-      onLoading: _onLoading,
-      child: ListView.builder(
-        itemCount: _dataArray.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(_dataArray[index].title ?? ''),
-          );},
-      ),
-    ) : _emptyWidget();
+            );
+          },
+        ),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: ListView.builder(
+          itemCount: _dataArray.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(_dataArray[index].title ?? ''),
+            );},
+        ),
+      );
+    } else {
+      return _emptyWidget();
+    }
   }
 
   Future<void> _onRefresh() async {
