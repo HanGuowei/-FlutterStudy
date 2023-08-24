@@ -4,7 +4,7 @@ class TodoListPage extends StatefulWidget {
   const TodoListPage({super.key});
 
   @override
-  _TodoListPageState createState() => _TodoListPageState();
+  State<TodoListPage> createState() => _TodoListPageState();
 }
 
 class _TodoListPageState extends State<TodoListPage> {
@@ -15,7 +15,9 @@ class _TodoListPageState extends State<TodoListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('task 2'),
+        title: const Text(
+          'task 2',
+        ),
       ),
       body: SafeArea(
         child: _dataArray.isNotEmpty ? ListView.builder(
@@ -23,30 +25,31 @@ class _TodoListPageState extends State<TodoListPage> {
             return _TodoCell(
               index: index,
               todoContent: _dataArray[index],
-              deleteCallBack: (deleteIndex) => _deleteContent(deleteIndex),
-              editCallBack: (editIndex) => _changeContent(isAdd: false, index: editIndex),
+              deleteCallBack: _deleteContent,
+              editCallBack: (editIndex)
+                => _changeContent(isAdd: false, index: editIndex),
             );
           },
           itemCount: _dataArray.length,
-        ) : Center(child: Text('Please add content'),),
+        ) : const Center(child: Text('Please add content',),),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _changeContent(),
-        child: Icon(Icons.add),
+        onPressed: _changeContent,
+        child: const Icon(Icons.add),
       ),
     );
   }
 
   void _deleteContent(int index) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Are you sure delete?'),
+          title: const Text('Are you sure delete?',),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('cancel'),
+              child: const Text('cancel',),
             ),
             TextButton(
               onPressed: () {
@@ -55,7 +58,7 @@ class _TodoListPageState extends State<TodoListPage> {
                 });
                 Navigator.of(context).pop();
               },
-              child: Text('sure'),
+              child: const Text('sure',),
             ),
           ],
         );},
@@ -63,10 +66,12 @@ class _TodoListPageState extends State<TodoListPage> {
   }
 
   void _changeContent({bool isAdd = true, int index = 0}) {
-    final title = isAdd ? Text('add content') : Text('edit content');
+    final title = isAdd
+        ? const Text('add content',)
+        : const Text('edit content',);
     final initialValue = isAdd ? '' : _dataArray[index];
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -75,8 +80,9 @@ class _TodoListPageState extends State<TodoListPage> {
             key: _formKey,
             child: TextFormField(
               initialValue: initialValue,
-              validator: (value) =>
-              isAdd ? _addValidator(value) : _editValidator(_dataArray[index], value),
+              validator: (value) => isAdd
+                  ? _addValidator(value)
+                  : _editValidator(_dataArray[index], value,),
               decoration: const InputDecoration(
                 hintText: 'please input content',
               ),
@@ -96,7 +102,9 @@ class _TodoListPageState extends State<TodoListPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('cancel'),
+              child: const Text(
+                'cancel',
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -106,7 +114,9 @@ class _TodoListPageState extends State<TodoListPage> {
                 _formKey.currentState?.save();
                 Navigator.of(context).pop();
               },
-              child: Text('sure'),
+              child: const Text(
+                'sure',
+              ),
             ),
           ],
         );},
@@ -130,7 +140,6 @@ class _TodoListPageState extends State<TodoListPage> {
 
 class _TodoCell extends StatelessWidget {
   const _TodoCell({
-  super.key,
   required this.index,
   required this.todoContent,
   required this.deleteCallBack,
@@ -151,14 +160,14 @@ class _TodoCell extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () => deleteCallBack(index),
-            icon: Icon(
+            icon: const Icon(
               Icons.delete,
               color: Colors.red,
             ),
           ),
           IconButton(
             onPressed: () => editCallBack(index),
-            icon: Icon(
+            icon: const Icon(
               Icons.edit,
               color: Colors.blue,
             ),

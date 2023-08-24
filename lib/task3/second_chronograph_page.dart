@@ -5,7 +5,7 @@ class SecondChronographPage extends StatefulWidget {
   const SecondChronographPage({super.key});
 
   @override
-  _SecondChronographPageState createState() => _SecondChronographPageState();
+  State<SecondChronographPage> createState() => _SecondChronographPageState();
 }
 
 class _SecondChronographPageState extends State<SecondChronographPage> {
@@ -17,20 +17,20 @@ class _SecondChronographPageState extends State<SecondChronographPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('task 3'),
+          title: const Text('task 3',),
         ),
         body: Padding(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
                 Text(
                   _elapsedTime,
-                  style: TextStyle(
-                    fontSize: 25.0,
+                  style: const TextStyle(
+                    fontSize: 25,
                   ),
                 ),
-                SizedBox(
-                  height: 20.0,
+                const SizedBox(
+                  height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -38,26 +38,26 @@ class _SecondChronographPageState extends State<SecondChronographPage> {
                     FloatingActionButton(
                       backgroundColor: Colors.green,
                       onPressed: startWatch,
-                      child: Icon(Icons.play_arrow),
+                      child: const Icon(Icons.play_arrow,),
                     ),
-                    SizedBox(
-                      width: 20.0,
+                    const SizedBox(
+                      width: 20,
                     ),
                     FloatingActionButton(
                       backgroundColor: Colors.red,
                       onPressed: stopWatch,
-                      child: Icon(Icons.stop),
+                      child: const Icon(Icons.stop,),
                     ),
-                    SizedBox(
-                      width: 20.0,
+                    const SizedBox(
+                      width: 20,
                     ),
                     FloatingActionButton(
                       backgroundColor: Colors.blue,
                       onPressed: resetWatch,
-                      child: Icon(Icons.refresh),
+                      child: const Icon(Icons.refresh,),
                     ),
                   ],
-                )
+                ),
               ],
             ),
         ),
@@ -67,7 +67,7 @@ class _SecondChronographPageState extends State<SecondChronographPage> {
   void startWatch() {
     _stopWatch.start();
     _timer = Timer.periodic(
-      Duration(milliseconds: 1000),
+      const Duration(milliseconds: 1000,),
       updateTime,
     );
   }
@@ -83,7 +83,7 @@ class _SecondChronographPageState extends State<SecondChronographPage> {
   }
 
   void setTime() {
-    var timeSoFar = _stopWatch.elapsedMilliseconds;
+    final timeSoFar = _stopWatch.elapsedMilliseconds;
     setState(() {
       _elapsedTime = transformMilliSeconds(timeSoFar);
     });
@@ -99,15 +99,15 @@ class _SecondChronographPageState extends State<SecondChronographPage> {
 
   String transformMilliSeconds(int milliseconds) {
 
-    int seconds = (milliseconds / 1000).truncate();
-    int minutes = (seconds / 60).truncate();
-    int hours = (minutes / 60).truncate();
+    final seconds = (milliseconds / 1000).truncate();
+    final minutes = (seconds / 60).truncate();
+    final hours = (minutes / 60).truncate();
 
-    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
-    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
-    String hoursStr = (hours % 60).toString().padLeft(2, '0');
+    final minutesStr = (minutes % 60).toString().padLeft(2, '0');
+    final secondsStr = (seconds % 60).toString().padLeft(2, '0');
+    final hoursStr = (hours % 60).toString().padLeft(2, '0');
 
-    return "$hoursStr:$minutesStr:$secondsStr";
+    return '$hoursStr:$minutesStr:$secondsStr';
   }
 
   @override

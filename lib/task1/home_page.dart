@@ -6,7 +6,7 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Task 1',
         ),
       ),
@@ -30,25 +30,27 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               questionTitle,
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             // count
             Text(
               _count.toString(),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             // + button
             FloatingActionButton(
               onPressed: _incrementCount,
-              child: Icon(Icons.add),
               backgroundColor: Colors.blue,
-            )
+              child: const Icon(
+                Icons.add,
+              ),
+            ),
           ],
         ),
       ),

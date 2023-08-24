@@ -8,7 +8,7 @@ class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
 
   @override
-  _ScannerPageState createState() => _ScannerPageState();
+  State<ScannerPage> createState() => _ScannerPageState();
 }
 
 class _ScannerPageState extends State<ScannerPage> {
@@ -17,7 +17,7 @@ class _ScannerPageState extends State<ScannerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('task 4'),
+        title: const Text('task 4',),
       ),
       body: MobileScanner(
         onDetect: (capture) => _checkBarcodes(capture.barcodes),
@@ -26,14 +26,18 @@ class _ScannerPageState extends State<ScannerPage> {
   }
 
   void _checkBarcodes(List<Barcode> barcodes) {
-    if (barcodes.isEmpty) return;
+    if (barcodes.isEmpty) {
+      return;
+    }
 
-    final String? barcodeStr = barcodes.first.rawValue;
+    final barcodeStr = barcodes.first.rawValue;
 
-    if (barcodeStr == null || barcodeStr.isEmpty) return;
+    if (barcodeStr == null || barcodeStr.isEmpty) {
+      return;
+    }
 
-    final url = '${amazonUrl}${_convertIsbn13ToIsbn10(barcodeStr)}';
-    final title = 'ISBN:${barcodeStr}';
+    final url = '$amazonUrl${_convertIsbn13ToIsbn10(barcodeStr)}';
+    final title = 'ISBN:$barcodeStr';
     Navigator.push(
       context,
       MaterialPageRoute<WebViewPage>(
@@ -63,7 +67,8 @@ class _ScannerPageState extends State<ScannerPage> {
       previousValue + int.parse(element.value) * (10 - element.key),
     );
     final checkDigit = remainder - sum % remainder;
-    final isbn10 = isbn13.substring(subStringStart, subStringEnd) + checkDigit.toString();
+    final isbn10 = isbn13.substring(subStringStart, subStringEnd)
+        + checkDigit.toString();
     return isbn10;
   }
 }

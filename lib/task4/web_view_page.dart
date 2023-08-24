@@ -12,7 +12,7 @@ class WebViewPage extends StatefulWidget {
   final String requestTitle;
 
   @override
-  _WebViewPageState createState() => _WebViewPageState();
+  State<WebViewPage> createState() => _WebViewPageState();
 }
 
 class _WebViewPageState extends State<WebViewPage> {
