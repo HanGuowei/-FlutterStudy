@@ -1,11 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'source_info.dart';
 
 part 'article_info.g.dart';
 
 @JsonSerializable()
+@immutable
 class ArticleInfo {
-  ArticleInfo({
+  const ArticleInfo({
     this.source,
     this.author,
     this.title,

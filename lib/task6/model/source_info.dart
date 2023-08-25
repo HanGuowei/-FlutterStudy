@@ -1,10 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'source_info.g.dart';
 
 @JsonSerializable()
+@immutable
 class SourceInfo {
-  SourceInfo({
+  const SourceInfo({
     this.id,
     this.name,
   });

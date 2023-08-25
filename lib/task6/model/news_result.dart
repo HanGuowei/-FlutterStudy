@@ -1,11 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'article_info.dart';
 
 part 'news_result.g.dart';
 
 @JsonSerializable()
+@immutable
 class NewsResult {
-  NewsResult({
+  const NewsResult({
     this.status,
     this.totalResults,
     this.articles,
