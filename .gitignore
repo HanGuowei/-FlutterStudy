@@ -59,6 +59,7 @@ linked_*.ds
 unlinked.ds
 unlinked_spec.ds
 lib/**/*.g.dart
+api_key.dev.json
 
 # Android related
 **/android/**/gradle-wrapper.jar

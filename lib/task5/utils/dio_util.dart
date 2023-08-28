@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 const String kBaseUrl = 'https://api.github.com';
+const String kNewsApiKey = String.fromEnvironment('NEWS_API_KEY');
 
    Dio createDio({String? baseUrl, String? basePath,}) {
     final dio = Dio(
@@ -25,7 +26,7 @@ const String kBaseUrl = 'https://api.github.com';
       RequestInterceptorHandler handler,
       ) {
      // github {'X-GitHub-Api-Version': '2022-11-28'}
-    options.headers['X-Api-Key'] = 'e20a599bdafc41f4a81675ec1068e9b6';
+    options.headers['X-Api-Key'] = kNewsApiKey;
 
     return handler.next(options);
   }

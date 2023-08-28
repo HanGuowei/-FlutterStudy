@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_study/task6/api/news_api.dart';
+import 'package:flutter_study/task6/empty_widget.dart';
 import 'package:flutter_study/task6/model/article_info.dart';
 import 'package:flutter_study/task6/news_cell.dart';
 import 'package:flutter_study/task6/news_detail_page.dart';
@@ -70,7 +71,7 @@ class _NewsListPageState extends State<NewsListPage> {
                 info: _dataArray[index],
                 clickCallBack: _pushInfoPage,
               );},
-          ) : _emptyWidget(),
+          ) : const EmptyWidget(),
         ),
       ),
     );
@@ -132,13 +133,5 @@ class _NewsListPageState extends State<NewsListPage> {
     _ when mode == LoadStatus.canLoading
     => const Text('release to load more'),
     _ => const Text('No more Data'),};
-  }
-
-  Widget _emptyWidget() {
-    return const Center(
-      child: Text(
-        'no data',
-      ),
-    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_study/task6/article_manager.dart';
+import 'package:flutter_study/task6/empty_widget.dart';
 import 'package:flutter_study/task6/model/article_info.dart';
 import 'package:flutter_study/task6/news_cell.dart';
 import 'package:flutter_study/task6/news_detail_page.dart';
@@ -27,7 +28,7 @@ class _FavoritesListPageState extends State<FavoritesListPage> {
                   clickCallBack: _pushInfoPage,
                 );},
       )
-          : _emptyWidget(),
+          : const EmptyWidget(),
     );
   }
 
@@ -44,13 +45,5 @@ class _FavoritesListPageState extends State<FavoritesListPage> {
 
   void _updateData() {
     favoritesArray = ArticleManager().favoritesArticleArray;
-  }
-
-  Widget _emptyWidget() {
-    return const Center(
-      child: Text(
-        'no favorites data',
-      ),
-    );
   }
 }
