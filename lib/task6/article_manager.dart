@@ -17,7 +17,8 @@ class ArticleManager {
         ,).toList() ?? [];
 
   bool isSave(ArticleInfo info) =>
-      favoritesArticleArray.any((element) => element.url == info.url);
+      favoritesArticleArray.any((element) =>
+      element.url == info.url && element.title == info.title,);
 
   void saveArticle(ArticleInfo info) {
     if (!isSave(info)) {
@@ -30,7 +31,8 @@ class ArticleManager {
   void unSaveArticle(ArticleInfo info) {
     if(isSave(info)) {
       final list = favoritesArticleArray
-        ..removeWhere((element) => element.url == info.url);
+        ..removeWhere((element) =>
+        element.url == info.url && element.title == info.title,);
       _cacheArticles(list);
     }
   }
