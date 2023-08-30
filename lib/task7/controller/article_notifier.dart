@@ -37,10 +37,7 @@ class ArticleNotifier extends _$ArticleNotifier {
 
   void unSaveArticle(ArticleInfo info) {
     if(isSave(info)) {
-      final list = [
-        for (final model in state)
-          if (model.url != info.url) model,
-      ];
+      final list = state.where((element) => element.url != info.url).toList();
       _cacheArticles(list);
     }
   }

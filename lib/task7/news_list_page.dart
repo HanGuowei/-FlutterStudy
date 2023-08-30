@@ -99,4 +99,10 @@ class _NewsListPageState extends ConsumerState<NewsListPage> {
     => const Text('release to load more'),
     _ => const Text('No more Data'),};
   }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 }
