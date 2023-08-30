@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_study/main.dart';
 import 'package:flutter_study/task7/model/article_info.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -14,12 +13,6 @@ bool isFavorites(IsFavoritesRef ref, {required ArticleInfo info}) {
   return articles.any((element) =>
     element.url == info.url && element.title == info.title,);
 }
-
-// final isFavoritesProvider =
-// StateProvider.autoDispose.family<bool, ArticleInfo>((ref, info) {
-//   final articles = ref.watch(articleNotifierProvider);
-//   return articles.any((element) => element.url == info.url);
-// });
 
 @riverpod
 class ArticleNotifier extends _$ArticleNotifier {
