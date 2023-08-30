@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_study/task5/repository_list_page.dart';
+import 'package:flutter_study/task6/custom_tab_bar.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Task',
-      home: RepositoryListPage(),
+      home: CustomTabBar(),
       debugShowCheckedModeBanner: false,
     );
   }
