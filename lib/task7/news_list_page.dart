@@ -25,8 +25,8 @@ class _NewsListPageState extends ConsumerState<NewsListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final articles = ref.watch(articleListProvider);
-    final articleListNotifier = ref.watch(articleListProvider.notifier);
+    final articles = ref.watch(articleListNotifierProvider);
+    final articleListNotifier = ref.watch(articleListNotifierProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: TextField(
@@ -38,16 +38,14 @@ class _NewsListPageState extends ConsumerState<NewsListPage> {
               color: Colors.white,
             ),
             suffix: OutlinedButton(
-              onPressed: articleListNotifier.refreshItems,
+              onPressed: () =>
+                  articleListNotifier.refreshItems(_searchController.text),
               child: const Text(
                 'search',
                 style: TextStyle(color: Colors.white),
               ),
             ),
           ),
-          onChanged: (value) {
-            ref.read(searchQueryProvider.notifier).state = value;
-          },
         ),
       ),
       body: SafeArea(
@@ -64,8 +62,10 @@ class _NewsListPageState extends ConsumerState<NewsListPage> {
             },
           ),
           controller: articleListNotifier.refreshController,
-          onRefresh: articleListNotifier.refreshItems,
-          onLoading: articleListNotifier.loadMoreItems,
+          onRefresh: () =>
+              articleListNotifier.refreshItems(_searchController.text),
+          onLoading: () =>
+              articleListNotifier.loadMoreItems(_searchController.text),
           child: articles.items.isNotEmpty ? ListView.builder(
             itemCount: articles.items.length,
             itemBuilder: (context, index) {

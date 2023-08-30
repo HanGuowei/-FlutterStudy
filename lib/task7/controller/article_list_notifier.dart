@@ -1,29 +1,22 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_study/task7/api/news_api.dart';
 import 'package:flutter_study/task7/model/article_info.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final searchQueryProvider = StateProvider<String>((_) => '');
+part 'article_list_notifier.g.dart';
 
-final articleListProvider =
-  StateNotifierProvider<ArticleListNotifier, ArticleListState>(
-    (ref) {
-      return ArticleListNotifier(ref);
-    }
-);
-
-class ArticleListNotifier extends StateNotifier<ArticleListState> {
-
-  ArticleListNotifier(this.ref) : super(ArticleListState());
+@riverpod
+class ArticleListNotifier extends _$ArticleListNotifier {
   final int _pageSize = 20;
   final refreshController = RefreshController(initialRefresh: true);
-  final Ref ref;
 
-  Future<void> fetchItems() async {
+  @override
+  ArticleListState build() => ArticleListState();
+
+  Future<void> fetchItems(String keyword) async {
     state = state.copyWith(
       isLoading: true,
     );
-    final keyword = ref.read(searchQueryProvider);
     final data = await NewsApi().getNewsList(keyword, state.page, _pageSize);
     state = state.copyWith(
       isLoading: false,
@@ -36,8 +29,7 @@ class ArticleListNotifier extends StateNotifier<ArticleListState> {
     );
   }
 
-  Future<void> refreshItems() async {
-    final keyword = ref.read(searchQueryProvider);
+  Future<void> refreshItems(String keyword) async {
     final data = await NewsApi().getNewsList(keyword, 1, _pageSize);
     refreshController.refreshCompleted();
     if (data == null) {
@@ -49,9 +41,8 @@ class ArticleListNotifier extends StateNotifier<ArticleListState> {
     );
   }
 
-  Future<void> loadMoreItems() async {
+  Future<void> loadMoreItems(String keyword) async {
     final nextPage = state.page + 1;
-    final keyword = ref.read(searchQueryProvider);
     final data = await NewsApi().getNewsList(keyword, nextPage, _pageSize);
     refreshController.loadComplete();
     if (data == null) {

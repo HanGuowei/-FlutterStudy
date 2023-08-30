@@ -6,7 +6,7 @@ part of 'article_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$isFavoritesHash() => r'f735895c809f00b0d52aa50e43dcea68b71ad38b';
+String _$isFavoritesHash() => r'e0738540ffb46af26d44ceb4fa82a98e8069bae6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -28,6 +28,8 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
+
+typedef IsFavoritesRef = AutoDisposeProviderRef<bool>;
 
 /// See also [isFavorites].
 @ProviderFor(isFavorites)
@@ -75,10 +77,10 @@ class IsFavoritesFamily extends Family<bool> {
 class IsFavoritesProvider extends AutoDisposeProvider<bool> {
   /// See also [isFavorites].
   IsFavoritesProvider({
-    required ArticleInfo info,
-  }) : this._internal(
+    required this.info,
+  }) : super.internal(
           (ref) => isFavorites(
-            ref as IsFavoritesRef,
+            ref,
             info: info,
           ),
           from: isFavoritesProvider,
@@ -90,43 +92,9 @@ class IsFavoritesProvider extends AutoDisposeProvider<bool> {
           dependencies: IsFavoritesFamily._dependencies,
           allTransitiveDependencies:
               IsFavoritesFamily._allTransitiveDependencies,
-          info: info,
         );
 
-  IsFavoritesProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.info,
-  }) : super.internal();
-
   final ArticleInfo info;
-
-  @override
-  Override overrideWith(
-    bool Function(IsFavoritesRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: IsFavoritesProvider._internal(
-        (ref) => create(ref as IsFavoritesRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        info: info,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeProviderElement<bool> createElement() {
-    return _IsFavoritesProviderElement(this);
-  }
 
   @override
   bool operator ==(Object other) {
@@ -142,20 +110,7 @@ class IsFavoritesProvider extends AutoDisposeProvider<bool> {
   }
 }
 
-mixin IsFavoritesRef on AutoDisposeProviderRef<bool> {
-  /// The parameter `info` of this provider.
-  ArticleInfo get info;
-}
-
-class _IsFavoritesProviderElement extends AutoDisposeProviderElement<bool>
-    with IsFavoritesRef {
-  _IsFavoritesProviderElement(super.provider);
-
-  @override
-  ArticleInfo get info => (origin as IsFavoritesProvider).info;
-}
-
-String _$articleNotifierHash() => r'4d31db014e5dc4392b859542941cc0e6b8f8ca9a';
+String _$articleNotifierHash() => r'2f8e560f701d5bb39155d458169a403441e358b3';
 
 /// See also [ArticleNotifier].
 @ProviderFor(ArticleNotifier)
