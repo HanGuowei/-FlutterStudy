@@ -22,12 +22,12 @@ class _NewsDetailPageState extends ConsumerState<NewsDetailPage> {
   @override
   void initState() {
     super.initState();
-    final url = widget.articleInfo.url;
-    if (url == null || url.isEmpty) {
+    final uri = Uri.tryParse(widget.articleInfo.url ?? '');
+    if (uri == null) {
       return;
     }
     _controller.loadRequest(
-      Uri.parse(url),
+      uri,
     );
   }
 
